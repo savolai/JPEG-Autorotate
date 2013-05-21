@@ -204,7 +204,7 @@ Section /o "Regenerate thumbnails (1.4 MB download)" SecFilergtthumb
   AddSize 5900
   Delete $INSTDIR\mogrify.exe
   Delete $INSTDIR\imagemagick_license.txt
-  InetLoad::load /BANNER "" "ImageMagick mogrify.exe download in progress..." \
+  inetc::get  /BANNER "ImageMagick mogrify.exe download in progress..." \
     "http://pilpi.net/software/mogrify_sfx.exe" \
     "$INSTDIR\mogrify_sfx.exe"
     Pop $0
