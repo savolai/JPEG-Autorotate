@@ -1,4 +1,4 @@
-; JPEG-EXIF installation script for NSIS. Will copy 
+; JPEG Autorotate installation script for NSIS. Will copy 
 ; the needed files to the directory the user selects
 ; and creates the necessary registry entries for the
 ; right-click menu items and for unistallation.
@@ -13,12 +13,12 @@
   !define MUI_ABORTWARNING
 
 ; The name of the installer
-Name "JPEG-EXIF autorotate 2.0"
+Name "JPEG Autorotate 2.0"
 
 ;XPStyle on
 	
 ; The file to write
-OutFile "JPEG-EXIF_autorotate.exe"
+OutFile "JPEG_autorotate.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\JPEG-EXIF_autorotate
@@ -52,7 +52,7 @@ InstallDirRegKey HKLM "Software\JPEG-EXIF_autorotate" "Install_Dir"
 ;--------------------------------
 
 ; The stuff to install
-Section "!JPEG-EXIF autorotate program files (required)" SecRotate
+Section "!JPEG Autorotate program files (required)" SecRotate
 
   SectionIn RO
   
@@ -249,11 +249,11 @@ SectionEnd
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts" SecShortcuts
 
-  CreateDirectory "$SMPROGRAMS\JPEG-EXIF autorotate"
-  CreateShortCut "$SMPROGRAMS\JPEG-EXIF autorotate\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\JPEG-EXIF autorotate\Readme.lnk" "$INSTDIR\readme.txt"
-  CreateShortCut "$SMPROGRAMS\JPEG-EXIF autorotate\Program folder.lnk" "$INSTDIR"
-  CreateShortCut "$SMPROGRAMS\JPEG-EXIF autorotate\ImageMagick License.lnk" "$INSTDIR\imagemagick_license.txt"
+  CreateDirectory "$SMPROGRAMS\JPEG Autorotate"
+  CreateShortCut "$SMPROGRAMS\JPEG Autorotate\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\JPEG Autorotate\Readme.lnk" "$INSTDIR\readme.txt"
+  CreateShortCut "$SMPROGRAMS\JPEG Autorotate\Program folder.lnk" "$INSTDIR"
+  CreateShortCut "$SMPROGRAMS\JPEG Autorotate\ImageMagick License.lnk" "$INSTDIR\imagemagick_license.txt"
 
   
 SectionEnd
@@ -338,10 +338,10 @@ Section "Uninstall"
   Delete $INSTDIR\imagemagick_license.txt
 
   ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\JPEG-EXIF autorotate\*.*"
+  Delete "$SMPROGRAMS\JPEG Autorotate\*.*"
 
   ; Remove directories used
-  RMDir "$SMPROGRAMS\JPEG-EXIF autorotate"
+  RMDir "$SMPROGRAMS\JPEG Autorotate"
   RMDir "$INSTDIR"
 
 SectionEnd
