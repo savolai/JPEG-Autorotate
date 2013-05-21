@@ -50,6 +50,10 @@ InstallDirRegKey HKLM "Software\JPEG-EXIF_autorotate" "Install_Dir"
  
   !insertmacro MUI_LANGUAGE "English"
 ;--------------------------------
+Function setPauseAfterDone 
+Var /GLOBAL setPauseAfterDone 
+StrCpy $setPauseAfterDone "-pauseAfterDone" 
+FunctionEnd 
 
 ; The stuff to install
 Section "!JPEG Autorotate program files (required)" SecRotate
@@ -106,7 +110,16 @@ Section "!JPEG Autorotate program files (required)" SecRotate
 
 
 SectionEnd
+;--------------------------------
 
+
+
+; Optional section (can be disabled by the user)
+Section "Wait for user confirmation after operation completed" SecPauseAfterDone
+	Call setPauseAfterDone
+SectionEnd
+
+;--------------------------------
 
 ;--------------------------------
 ;--------------------------------
@@ -119,7 +132,7 @@ SectionGroup /e "Folder menu items"
 Section "Rotate in folder and subfolders" SecFolderRecursive
 
   WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder_recursive" "" "Autorotate all JPEGs in folder and in all subfolders"
-  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder_recursive\command" "" '"$INSTDIR\autooperatedir_recursive.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -autorot'
+  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder_recursive\command" "" '"$INSTDIR\autooperatedir_recursive.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -autorot $setPauseAfterDone'
   
 SectionEnd
 
@@ -129,7 +142,7 @@ SectionEnd
 Section "Rotate (not in subfolders)" SecFolder
 
   WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder" "" "Autorotate all JPEGs in folder"
-  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder\command" "" '"$INSTDIR\autooperatedir.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -autorot'
+  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder\command" "" '"$INSTDIR\autooperatedir.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -autorot $setPauseAfterDone'
   
 SectionEnd
 SectionGroupEnd
@@ -146,25 +159,26 @@ Section "Autorotate" SecFileAutorotate
 
   ;for .jpg
   WriteRegStr HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_autorotate" "" "Autorotate"
-  WriteRegStr  HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr  HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot $setPauseAfterDone'
   WriteRegStr HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_autorotate" "" "Autorotate"
-  WriteRegStr  HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr  HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot $setPauseAfterDone'
 
   ;for .jpeg
   WriteRegStr HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_autorotate" "" "Autorotate"
-  WriteRegStr  HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr  HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot $setPauseAfterDone'
   WriteRegStr HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_autorotate" "" "Autorotate"
-  WriteRegStr  HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr  HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot $setPauseAfterDone'
 
   ;for .jpe
   WriteRegStr HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_autorotate" "" "Autorotate"
-  WriteRegStr  HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr  HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot $setPauseAfterDone'
   WriteRegStr HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_autorotate" "" "Autorotate"
-  WriteRegStr  HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr  HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot $setPauseAfterDone'
 
 SectionEnd
 
 ;--------------------------------
+
 
 ; Optional section (disabled by default: /o)
 ;Section /o "Strip all metadata" SecFilepurejpg
@@ -220,25 +234,25 @@ Section /o "Regenerate thumbnails (1.4 MB download)" SecFilergtthumb
 
   ;for .jpg
   WriteRegStr HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
-  WriteRegStr HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt $setPauseAfterDone'
   WriteRegStr HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
-  WriteRegStr HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt $setPauseAfterDone'
 
   ;for .jpeg
   WriteRegStr HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
-  WriteRegStr HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt $setPauseAfterDone'
   WriteRegStr HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
-  WriteRegStr HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt $setPauseAfterDone'
 
    ;for .jpe
   WriteRegStr HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
-  WriteRegStr HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt $setPauseAfterDone'
   WriteRegStr HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
-  WriteRegStr HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt $setPauseAfterDone'
 
   ;for folders and subfolders
   WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_regenerate_folder_recursive" "" "Regenerate thumbnails of JPEGs in folder and in all subfolders"
-  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_regenerate_folder_recursive\command" "" '"$INSTDIR\autooperatedir_recursive.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_regenerate_folder_recursive\command" "" '"$INSTDIR\autooperatedir_recursive.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -rgt $setPauseAfterDone'
 
 
 SectionEnd
@@ -258,7 +272,7 @@ Section "Start Menu Shortcuts" SecShortcuts
   
 SectionEnd
 
-;--------------------------------
+
 ;--------------------------------
 
 
@@ -273,6 +287,7 @@ SectionEnd
   LangString DESC_SecFilergtthumb ${LANG_ENGLISH} "File menu item: Regenerate thumbnail in selected file(s). Useful for users of old jhead/JPEG-EXIF autorotate (jhead -rgt). Will download 1.4 MB, requires internet connection!"
   LangString DESC_SecFiletstampset ${LANG_ENGLISH} "Selected: file timestamps of *all selected* files are changed to EXIF date. / Not selected: timestamps of *rotated* files changed to rotating date. (See readme.txt)"
   LangString DESC_SecShortcuts ${LANG_ENGLISH} "Add shortcuts to the Start menu to readme.txt, the uninstall application and the program folder"
+  LangString DESC_SecPauseAfterDone ${LANG_ENGLISH} "Wait for user confirmation after operation completed"
 
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
@@ -284,6 +299,7 @@ SectionEnd
     !insertmacro MUI_DESCRIPTION_TEXT ${SecFilergtthumb} $(DESC_SecFilergtthumb)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecFiletstampset} $(DESC_SecFiletstampset)
     !insertmacro MUI_DESCRIPTION_TEXT ${SecShortcuts} $(DESC_SecShortcuts)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecPauseAfterDone} $(DESC_SecPauseAfterDone)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
 ;--------------------------------
 

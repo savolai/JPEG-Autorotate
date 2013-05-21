@@ -10,4 +10,4 @@
 @echo JPEG Autorotate - http://pilpi.net/software/JPEG-EXIF_autorotate.php
 @echo Rotating finished. Please press any key to close the window.
 @echo.
-@pause
+@IF [%5]==[-pauseAfterDone] @pause
