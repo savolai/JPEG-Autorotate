@@ -66,8 +66,7 @@ Section "!JPEG Autorotate program files (required)" SecRotate
   ; Put files there
   File "jhead.exe"
   File "jpegtran.exe"
-  File "readme.html"
-  File "style.css"
+  File "readme.txt"
   File "autooperatedir.bat"
   File "autooperate.bat"
   File "autorotate.nsi"
@@ -266,7 +265,7 @@ Section "Start Menu Shortcuts" SecShortcuts
 
   CreateDirectory "$SMPROGRAMS\JPEG Autorotate"
   CreateShortCut "$SMPROGRAMS\JPEG Autorotate\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\JPEG Autorotate\Readme.lnk" "$INSTDIR\readme.html"
+  CreateShortCut "$SMPROGRAMS\JPEG Autorotate\Readme.lnk" "$INSTDIR\readme.txt"
   CreateShortCut "$SMPROGRAMS\JPEG Autorotate\Program folder.lnk" "$INSTDIR"
   CreateShortCut "$SMPROGRAMS\JPEG Autorotate\ImageMagick License.lnk" "$INSTDIR\imagemagick_license.txt"
 
@@ -287,7 +286,7 @@ SectionEnd
 ;  LangString DESC_SecFilepurejpg ${LANG_ENGLISH} "File menu item: Remove metadata (-purejpg command line parameter)"
   LangString DESC_SecFilergtthumb ${LANG_ENGLISH} "File menu item: Regenerate thumbnail in selected file(s). Useful for users of old jhead/JPEG-EXIF autorotate (jhead -rgt). Will download 1.4 MB, requires internet connection!"
   LangString DESC_SecFiletstampset ${LANG_ENGLISH} "Selected: file timestamps of *all selected* files are changed to EXIF date. / Not selected: timestamps of *rotated* files changed to rotating date. (See readme.txt)"
-  LangString DESC_SecShortcuts ${LANG_ENGLISH} "Add shortcuts to the Start menu to readme.html, the uninstall application and the program folder"
+  LangString DESC_SecShortcuts ${LANG_ENGLISH} "Add shortcuts to the Start menu to readme.txt, the uninstall application and the program folder"
   LangString DESC_SecPauseAfterDone ${LANG_ENGLISH} "Wait for user confirmation after operation completed"
 
   ;Assign language strings to sections
@@ -348,8 +347,7 @@ Section "Uninstall"
   Delete $INSTDIR\autooperatedir_ft.bat
   Delete $INSTDIR\autooperate_ft.bat
   Delete $INSTDIR\autorotate_ft.nsi
-  Delete $INSTDIR\readme.html
-  Delete $INSTDIR\style.css
+  Delete $INSTDIR\readme.txt
   Delete $INSTDIR\autorotatedir_recursive.bat
   Delete $INSTDIR\mogrify_sfx.exe
   Delete $INSTDIR\mogrify.exe
