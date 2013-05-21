@@ -13,7 +13,7 @@
   !define MUI_ABORTWARNING
 
 ; The name of the installer
-Name "JPEG-EXIF autorotate 1.2"
+Name "JPEG-EXIF autorotate 2.0"
 
 ;XPStyle on
 	
@@ -78,10 +78,20 @@ Section "!JPEG-EXIF autorotate program files (required)" SecRotate
   ; Autorotate: Find out the JPEG file registry keys in which to write 
   ReadRegStr $0 HKEY_CLASSES_ROOT .jpg ""
   ReadRegStr $1 HKEY_CLASSES_ROOT .jpeg ""
+  ReadRegStr $2 HKEY_CLASSES_ROOT .jpe ""
+
+  ReadRegStr $3 HKEY_CLASSES_ROOT SystemFileAssociations\.jpg ""
+  ReadRegStr $4 HKEY_CLASSES_ROOT SystemFileAssociations\.jpeg ""
+  ReadRegStr $5 HKEY_CLASSES_ROOT SystemFileAssociations\.jpe ""
+  ;ReadRegStr $7 HKEY_CLASSES_ROOT .jpe ""
 
   ; Autorotate: Store the registry keys where we wrote for uninstall
   WriteINIStr $INSTDIR\uninstall.ini registry_keys jpg $0
   WriteINIStr $INSTDIR\uninstall.ini registry_keys jpeg $1
+  WriteINIStr $INSTDIR\uninstall.ini registry_keys jpe $2
+  WriteINIStr $INSTDIR\uninstall.ini registry_keys jpg2 $3
+  WriteINIStr $INSTDIR\uninstall.ini registry_keys jpeg2 $4
+  WriteINIStr $INSTDIR\uninstall.ini registry_keys jpe2 $5
 
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\JPEG-EXIF_autorotate "Install_Dir" "$INSTDIR"
@@ -135,12 +145,22 @@ Section "Autorotate" SecFileAutorotate
   ; Create the JPEG context menus
 
   ;for .jpg
-  WriteRegStr HKEY_CLASSES_ROOT "$0\shellJPEG-EXIF_autorotate" "" "Autorotate"
-  WriteRegStr  HKEY_CLASSES_ROOT "$0shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_autorotate" "" "Autorotate"
+  WriteRegStr  HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_autorotate" "" "Autorotate"
+  WriteRegStr  HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
 
   ;for .jpeg
   WriteRegStr HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_autorotate" "" "Autorotate"
   WriteRegStr  HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_autorotate" "" "Autorotate"
+  WriteRegStr  HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+
+  ;for .jpe
+  WriteRegStr HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_autorotate" "" "Autorotate"
+  WriteRegStr  HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
+  WriteRegStr HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_autorotate" "" "Autorotate"
+  WriteRegStr  HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot'
 
 SectionEnd
 
@@ -201,10 +221,20 @@ Section /o "Regenerate thumbnails (1.4 MB download)" SecFilergtthumb
   ;for .jpg
   WriteRegStr HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
   WriteRegStr HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
+  WriteRegStr HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
 
   ;for .jpeg
   WriteRegStr HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
   WriteRegStr HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
+  WriteRegStr HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+
+   ;for .jpe
+  WriteRegStr HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
+  WriteRegStr HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
+  WriteRegStr HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_regenerate" "" "Regenerate thumbnail(s)"
+  WriteRegStr HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt'
 
   ;for folders and subfolders
   WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_regenerate_folder_recursive" "" "Regenerate thumbnails of JPEGs in folder and in all subfolders"
@@ -264,10 +294,23 @@ Section "Uninstall"
   ; Remove registry keys AUTOROTATE: the context menu registry keys
   ReadINIStr $0 $INSTDIR\uninstall.ini registry_keys jpg
   ReadINIStr $1 $INSTDIR\uninstall.ini registry_keys jpeg
+  ReadINIStr $2 $INSTDIR\uninstall.ini registry_keys jpe
+  ReadINIStr $3 $INSTDIR\uninstall.ini registry_keys jpg2
+  ReadINIStr $4 $INSTDIR\uninstall.ini registry_keys jpeg2
+  ReadINIStr $5 $INSTDIR\uninstall.ini registry_keys jpe2
   DeleteRegKey HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_autorotate" "" 
   DeleteRegKey HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_autorotate" "" 
   DeleteRegKey HKEY_CLASSES_ROOT "$0\shell\JPEG-EXIF_regenerate" "" 
   DeleteRegKey HKEY_CLASSES_ROOT "$1\shell\JPEG-EXIF_regenerate" "" 
+  DeleteRegKey HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_autorotate" "" 
+  DeleteRegKey HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_autorotate" "" 
+  DeleteRegKey HKEY_CLASSES_ROOT "$3\shell\JPEG-EXIF_regenerate" "" 
+  DeleteRegKey HKEY_CLASSES_ROOT "$4\shell\JPEG-EXIF_regenerate" "" 
+  DeleteRegKey HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_autorotate" "" 
+  DeleteRegKey HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_autorotate" "" 
+  DeleteRegKey HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_regenerate" "" 
+  DeleteRegKey HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_regenerate" "" 
+
   DeleteRegKey HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder" 
   DeleteRegKey HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder_recursive" 
   DeleteRegKey HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_regenerate_folder_recursive" 
