@@ -18,7 +18,7 @@ Name "JPEG Autorotate 2.0"
 ;XPStyle on
 	
 ; The file to write
-OutFile "installer\JPEG_autorotate.exe"
+OutFile "installer\JPEG_Autorotate.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\JPEG-EXIF_autorotate
