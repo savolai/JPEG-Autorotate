@@ -17,10 +17,12 @@ Which calls the bat file
 
 which pretty much only calls jhead and nothing else.
 
- %1 %4 %2\*.jpg
+```
+%1 %4 %2\*.jpg
  %1 = $INSTDIR\jhead 
  %4 = -autorot
  %2 = directory path
+```
 
 If you want me to add any parameters of jhead, I can add parameters of course. Or if you can send a patch on github, that would be great. I don't really have much time to work on JPEG autorotate and would love someone to take its maintenance over on github.
 
