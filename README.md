@@ -12,7 +12,7 @@ WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder\command"
 
 (https://github.com/savolai/JPEG-Autorotate/blob/master/autorotate.nsi )
 
-Which calls the bat wile
+Which calls the bat file
 ( https://github.com/savolai/JPEG-Autorotate/blob/master/autooperatedir.bat (
 
 which pretty much only calls jhead and nothing else.
