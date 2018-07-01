@@ -132,8 +132,8 @@ SectionGroup /e "Folder menu items"
 ; Optional section (can be disabled by the user)
 Section "Rotate in folder and subfolders" SecFolderRecursive
 
-  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder_recursive" "" "Autorotate all JPEGs in folder and in all subfolders"
-  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder_recursive\command" "" '"$INSTDIR\autooperatedir_recursive.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -autorot $setPauseAfterDone'
+  WriteRegStr HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_autorotate_folder_recursive" "" "Autorotate all JPEGs in folder and in all subfolders"
+  WriteRegStr HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_autorotate_folder_recursive\command" "" '"$INSTDIR\autooperatedir_recursive.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -autorot $setPauseAfterDone'
   
 SectionEnd
 
@@ -142,8 +142,8 @@ SectionEnd
 ; Optional section (can be disabled by the user)
 Section "Rotate (not in subfolders)" SecFolder
 
-  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder" "" "Autorotate all JPEGs in folder"
-  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder\command" "" '"$INSTDIR\autooperatedir.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -autorot $setPauseAfterDone'
+  WriteRegStr HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_autorotate_folder" "" "Autorotate all JPEGs in folder"
+  WriteRegStr HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_autorotate_folder\command" "" '"$INSTDIR\autooperatedir.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -autorot $setPauseAfterDone'
   
 SectionEnd
 SectionGroupEnd
@@ -252,8 +252,8 @@ Section /o "Regenerate thumbnails (1.4 MB download)" SecFilergtthumb
   WriteRegStr HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_regenerate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -rgt $setPauseAfterDone'
 
   ;for folders and subfolders
-  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_regenerate_folder_recursive" "" "Regenerate thumbnails of JPEGs in folder and in all subfolders"
-  WriteRegStr HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_regenerate_folder_recursive\command" "" '"$INSTDIR\autooperatedir_recursive.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -rgt $setPauseAfterDone'
+  WriteRegStr HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_regenerate_folder_recursive" "" "Regenerate thumbnails of JPEGs in folder and in all subfolders"
+  WriteRegStr HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_regenerate_folder_recursive\command" "" '"$INSTDIR\autooperatedir_recursive.bat" "$INSTDIR\jhead" "%l" "$INSTDIR" -rgt $setPauseAfterDone'
 
 
 SectionEnd
@@ -327,9 +327,9 @@ Section "Uninstall"
   DeleteRegKey HKEY_CLASSES_ROOT "$2\shell\JPEG-EXIF_regenerate" "" 
   DeleteRegKey HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_regenerate" "" 
 
-  DeleteRegKey HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder" 
-  DeleteRegKey HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_autorotate_folder_recursive" 
-  DeleteRegKey HKEY_CLASSES_ROOT "Folder\shell\JPEG-EXIF_regenerate_folder_recursive" 
+  DeleteRegKey HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_autorotate_folder" 
+  DeleteRegKey HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_autorotate_folder_recursive" 
+  DeleteRegKey HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_regenerate_folder_recursive" 
 
   ; Remove registry keys (first _ removed)
   
