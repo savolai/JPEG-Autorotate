@@ -6,6 +6,7 @@
 ;Include Modern UI
 
   !include "MUI.nsh"
+  !addplugindir "nsis-plugins\inetc\Plugins"
 
 ;--------------------------------
 ;Interface Settings
@@ -88,7 +89,6 @@ Section "!JPEG Autorotate program files (required)" SecRotate
   ReadRegStr $3 HKEY_CLASSES_ROOT SystemFileAssociations\.jpg ""
   ReadRegStr $4 HKEY_CLASSES_ROOT SystemFileAssociations\.jpeg ""
   ReadRegStr $5 HKEY_CLASSES_ROOT SystemFileAssociations\.jpe ""
-  ;ReadRegStr $7 HKEY_CLASSES_ROOT .jpe ""
 
   ; Autorotate: Store the registry keys where we wrote for uninstall
   WriteINIStr $INSTDIR\uninstall.ini registry_keys jpg $0
@@ -176,6 +176,11 @@ Section "Autorotate" SecFileAutorotate
   WriteRegStr HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_autorotate" "" "Autorotate"
   WriteRegStr  HKEY_CLASSES_ROOT "$5\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot $setPauseAfterDone'
 
+  ;for image
+  WriteRegStr HKEY_CLASSES_ROOT "SystemFileAssociations\Image\shell\JPEG-EXIF_autorotate" "" "Autorotate"
+  WriteRegStr  HKEY_CLASSES_ROOT "SystemFileAssociations\Image\shell\JPEG-EXIF_autorotate\command" "" '"$INSTDIR\autooperate.bat" "$INSTDIR\jhead" "%1" "$INSTDIR" -autorot $setPauseAfterDone'
+
+  
 SectionEnd
 
 ;--------------------------------
@@ -331,6 +336,9 @@ Section "Uninstall"
   DeleteRegKey HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_autorotate_folder_recursive" 
   DeleteRegKey HKEY_CLASSES_ROOT "Directory\shell\JPEG-EXIF_regenerate_folder_recursive" 
 
+    ;for image
+  DeleteRegKey HKEY_CLASSES_ROOT "SystemFileAssociations\Image\shell\JPEG-EXIF_autorotate" "" 
+  
   ; Remove registry keys (first _ removed)
   
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JPEG-EXIF_autorotate"
