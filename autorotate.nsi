@@ -14,7 +14,7 @@
   !define MUI_ABORTWARNING
 
 ; The name of the installer
-Name "JPEG Autorotate 2.0"
+Name "JPEG Autorotate 2.1"
 
 ;XPStyle on
 	
