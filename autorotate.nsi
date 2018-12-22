@@ -355,6 +355,7 @@ Section "Uninstall"
   Delete $INSTDIR\autorotate_ft.nsi
   Delete $INSTDIR\style.css
   Delete $INSTDIR\autorotatedir_recursive.bat
+  Delete $INSTDIR\autooperatedir_recursive.bat
   Delete $INSTDIR\mogrify_sfx.exe
   Delete $INSTDIR\mogrify.exe
   Delete $INSTDIR\imagemagick_license.txt
