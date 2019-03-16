@@ -15,7 +15,7 @@
 
 ; The name of the installer
 Name "JPEG Autorotate 2.1"
-
+BrandingText "jpegrotate.com - Scanrobot Oy / Olli Savolainen"
 ;XPStyle on
 	
 ; The file to write
