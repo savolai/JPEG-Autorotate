@@ -1,8 +1,10 @@
 JPEG-Autorotate
 ===============
 
+NOTE: This repository contains the source code of JPEG Autorotate 2, which has been superceded by JPEG Autorotate 3. See https://jpegrotate.com
+
 Adds Windows right click menu items to folders and photo files (.jpg, .jpeg) for lossless rotation of JPEG files according to EXIF orientation metadata.
-See http://jpegrotate.com
+
 
 (Developer details below added July 22, 2016)
 
